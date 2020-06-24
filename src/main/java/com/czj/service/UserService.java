@@ -31,4 +31,21 @@ public class UserService {
     public Integer count() {
         return userDao.count();
     }
+
+    public void delete(Integer id) {
+        userDao.delete(id);
+    }
+
+    public User getUserById(Integer id) {
+        return userDao.getUserById(id);
+    }
+
+    public boolean getUserByUserName(String userName) {
+        User user = userDao.getUserByUserName(userName);
+        if (user == null) {
+            return true;
+        }
+        //账号已存在
+        return false;
+    }
 }

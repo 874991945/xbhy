@@ -39,15 +39,12 @@
                 pattern="yyyy年MM月dd日 HH时mm分ss"></fmt:formatDate>
                 ${registerTime}
             </td>
-            <td><a href="">修改</a> <a href="">删除</a></td>
+            <td><a href="/user/toUpdate?id=${user.id}" class="btn btn-primary">修改</a> <a href="/user/delete?id=${user.id}" class="btn btn-danger">删除</a></td>
 
         </tr>
     </c:forEach>
 </table>
 
-    当前页：${}
-    <a href="/user/list?page=${page-1}">上一页</a>
-    <a href="/user/list?page=${page+1}">下一页</a>
 </div>
 </body>
 </html>

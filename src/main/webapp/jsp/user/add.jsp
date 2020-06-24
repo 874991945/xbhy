@@ -22,12 +22,31 @@
                 $("#deptId").append(html);
             }
         })
-    })
+    });
+
+    function checkName() {
+        var name=$("#username").val();
+        $.ajax({
+            url:"/dept/getUserByUserName",
+            type:"get",
+            data:{"username":name},
+            dataType:"text",
+            success:function (data) {
+                if (data==0){
+                    $("#username").val("");
+                    $("#span").attr("hidden",false);
+                }else {
+                    $("#span").attr("hidden",true);
+                }
+            }
+        })
+    }
 </script>
 <div id="right">
 
     <form action="/user/add">
-        用户名：<input type="text" name="username" value=""><br><br>
+        用户名：<input type="text" name="username" id="username" onblur="checkName()">
+        <span id="span" style="color: red;" hidden>账号已存在，请重新输入</span><br><br>
         密码：<input type="text" name="password"><br><br>
         邮箱：<input type="text" name="email"><br><br>
         真实姓名：<input type="text" name="realName"><br><br>
