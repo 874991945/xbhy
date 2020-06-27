@@ -27,7 +27,7 @@
     function checkName() {
         var name=$("#username").val();
         $.ajax({
-            url:"/dept/getUserByUserName",
+            url:"/user/getUserByUserName",
             type:"get",
             data:{"username":name},
             dataType:"text",
@@ -54,7 +54,7 @@
         性别：<input type="radio" name="sex" value="1">男
         <input type="radio" name="sex" value="0">女<br><br>
         简介：<textarea name="description"></textarea><br><br>
-        部门：<select id="deptId">
+        部门：<select name="deptName" id="deptId">
 
     </select><br><br>
         <input type="submit" value="保存">

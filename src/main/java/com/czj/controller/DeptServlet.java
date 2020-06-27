@@ -24,6 +24,7 @@ public class DeptServlet extends BaseServlet{
     public void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<Dept>deptList=deptService.listAll();
+        request.setAttribute("deptList",deptList);
         response.getWriter().write(JSON.toJSONString(deptList));
     }
 }

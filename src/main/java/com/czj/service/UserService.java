@@ -3,8 +3,10 @@ package com.czj.service;
 import com.czj.dao.MenuDao;
 import com.czj.dao.UserDao;
 import com.czj.entity.Menu;
+import com.czj.entity.Page;
 import com.czj.entity.User;
 import org.springframework.dao.DataAccessException;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -17,20 +19,30 @@ import java.util.List;
 public class UserService {
     private UserDao userDao = new UserDao();
 
-    public List<User> listAll() {
-        return userDao.listAll();
+    public Page listAll(String name, String pageStr) {
+        Page page=new Page<User>();
+        //当前页
+        if (!StringUtils.isEmpty(pageStr)) {
+            page.setPageCurrent(Integer.valueOf(pageStr));
+        }
+        //总记录数
+        page.setCount(userDao.count(name));
+        //总数据
+        List<User> list = userDao.listAll(name, page);
+        page.setData(list);
+        return page;
     }
 
-    public void add(User user){
+    public void add(User user) {
         user.setId(null);
         user.setRegisterTime(new Date());
         user.setDeptId(null);
         userDao.add(user);
     }
 
-    public Integer count() {
-        return userDao.count();
-    }
+//    public Integer count() {
+//        return userDao.count();
+//    }
 
     public void delete(Integer id) {
         userDao.delete(id);
@@ -38,6 +50,10 @@ public class UserService {
 
     public User getUserById(Integer id) {
         return userDao.getUserById(id);
+    }
+
+    public void update(User user) {
+        userDao.update(user);
     }
 
     public boolean getUserByUserName(String userName) {

@@ -1,5 +1,6 @@
 package com.czj.dao;
 
+import com.czj.entity.Page;
 import com.czj.entity.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -13,8 +14,10 @@ import java.util.List;
  */
 public class UserDao extends BaseDao {
 
-    public List<User> listAll() {
-        return template.query("select * from user", new BeanPropertyRowMapper<User>(User.class));
+    public List<User> listAll(String name, Page page) {
+        String sql="select u.*,d.name deptName from user u left join dept d on u.dept_id=d.id where username like ? limit ?,?";
+        return template.query(sql, new BeanPropertyRowMapper<User>(User.class),
+                "%"+name+"%",(page.getPageCurrent()-1)*page.getSize(),page.getSize());
     }
 
     //增加数据
@@ -24,10 +27,11 @@ public class UserDao extends BaseDao {
                 user.getAge(), user.getSex(), user.getDescription(), user.getRegisterTime(), user.getDeptId());
     }
 
-    public Integer count() {
-        String sql = "select count(1) from user";
+    //总记录数
+    public Integer count(String username) {
+        String sql = "select count(1) from user where username like ?";
         try {
-            return template.queryForObject(sql, Integer.class);
+            return template.queryForObject(sql, Integer.class,"%"+username+"%");
         } catch (DataAccessException e) {
             return 0;
         }
@@ -40,6 +44,7 @@ public class UserDao extends BaseDao {
     }
 
     //修改
+    //1.回显数据
     public User getUserById(Integer id) {
         String sql = "select * from user where id=?";
         try {
@@ -48,6 +53,13 @@ public class UserDao extends BaseDao {
             return null;
         }
     }
+    //2.执行修改
+    public void update(User user){
+        String sql="update user set username=?,email=?,real_name=?,age=?,sex=?,description=?,dept_id=? where id=?";
+        template.update(sql,user.getUsername(),user.getEmail(),user.getRealName(),
+                user.getAge(),user.getSex(),user.getDescription(),user.getDeptId(),user.getId());
+    }
+
 
     //验证用户名是否存在
     public User getUserByUserName(String userName) {

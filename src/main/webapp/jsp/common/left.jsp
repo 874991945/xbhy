@@ -26,7 +26,7 @@
 
 </style>
 
-<script>
+<%--<script>
     window.onload = function (ev) {
 
         // $.ajax({
@@ -84,10 +84,17 @@
         });
 
     }
-</script>
+</script>--%>
 
 <body>
 <div id="left">
+    系统管理
+    <ul>
+        <li><a href="/user/list">用户管理</a></li>
+        <li><a href="/dept/list">部门管理</a></li>
+    </ul>
+
+
 
 </div>
 

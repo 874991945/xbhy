@@ -24,31 +24,30 @@ import java.util.Map;
  */
 
 @WebServlet("/user/*")
-public class UserServlet extends BaseServlet{
+public class UserServlet extends BaseServlet {
 
-    private UserService userService=new UserService();
+    private UserService userService = new UserService();
     private DeptService deptService = new DeptService();
 
     public void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //根据用户名模糊查询
+        String name = request.getParameter("username");
+        name=name==null?"":name;
 
-        String name=request.getParameter("username");
-        request.setAttribute("username",name);
+        //获取页数
+        String pageStr = request.getParameter("page");
 
-        //获取总记录数
-        Integer count=userService.count();
-        String pageStr=request.getParameter("page");
-
-        List<User>list=userService.listAll();
-        request.setAttribute("list",list);
+        request.setAttribute("username", name);
+        request.setAttribute("page", userService.listAll(name,pageStr));
         request.getRequestDispatcher("/jsp/user/list.jsp").forward(request, response);
     }
 
     public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Map<String, String[]>map= request.getParameterMap();
-        User user=new User();
+        Map<String, String[]> map = request.getParameterMap();
+        User user = new User();
         try {
-            BeanUtils.populate(user,map);
+            BeanUtils.populate(user, map);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -72,6 +71,19 @@ public class UserServlet extends BaseServlet{
         request.getRequestDispatcher("/jsp/user/update.jsp").forward(request, response);
     }
 
+    public void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Map<String, String[]> map = request.getParameterMap();
+        User user = new User();
+        try {
+            BeanUtils.populate(user, map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        userService.update(user);
+        response.sendRedirect("/user/list");
+    }
+
     public void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String id = request.getParameter("id");
@@ -84,7 +96,7 @@ public class UserServlet extends BaseServlet{
 
     public void getUserByUserName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        String name = request.getParameter("userName");
+        String name = request.getParameter("username");
         //name==null || "".equals(name)
         if (StringUtils.isEmpty(name)) {
             return;
@@ -98,4 +110,5 @@ public class UserServlet extends BaseServlet{
         }
         out.close();
     }
+
 }
