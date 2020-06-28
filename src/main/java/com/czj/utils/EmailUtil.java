@@ -49,7 +49,7 @@ public class EmailUtil {
             Session session = Session.getDefaultInstance(properties, new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(from, "jlfpyaxjbdfcbcji");
+                    return new PasswordAuthentication(from, "");
                 }
             });
 

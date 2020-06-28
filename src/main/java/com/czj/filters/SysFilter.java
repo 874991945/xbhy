@@ -63,7 +63,8 @@ public class SysFilter implements Filter {
                 uri.endsWith("/forget.jsp") ||
                 uri.endsWith("/email") ||
                 uri.endsWith("/forget") ||
-                uri.endsWith("/menu")) {
+                uri.endsWith("/menu") ||
+        uri.endsWith("/addUserName.jsp")) {
             //直接放行
             filterChain.doFilter(request, response);
             return;
