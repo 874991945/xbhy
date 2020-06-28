@@ -26,5 +26,7 @@ public class DeptServlet extends BaseServlet{
         List<Dept>deptList=deptService.listAll();
         request.setAttribute("deptList",deptList);
         response.getWriter().write(JSON.toJSONString(deptList));
+
+        request.getRequestDispatcher("/jsp/dept/dept.jsp").forward(request,response);
     }
 }

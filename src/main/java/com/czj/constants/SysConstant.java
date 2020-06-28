@@ -1,0 +1,15 @@
+package com.czj.constants;
+
+/**
+ * @auth czj
+ * @date 2020/6/28
+ * @Description
+ */
+public class SysConstant {
+    public static final String SESSION_LOGIN="session_login";
+
+    public static final String SESSION_CODE="session_code";
+
+    public static final String COOKIE_REMEMBER="cookie_remember";
+
+}
