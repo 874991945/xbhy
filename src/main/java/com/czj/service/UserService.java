@@ -76,4 +76,8 @@ public class UserService {
     public void updatePs(String username, String newPs) {
         userDao.updatePs(username, newPs);
     }
+
+    public void updatePic(Integer id, String pic) {
+        userDao.updatePic(id,pic);
+    }
 }

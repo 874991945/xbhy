@@ -4,9 +4,6 @@
     <title>登录</title>
 </head>
 <body>
-<%@include file="../common/top.jsp" %>
-<%@include file="../common/left.jsp" %>
-
 <script>
     $(function () {
         $.ajax({
@@ -42,8 +39,7 @@
         })
     }
 </script>
-<div id="right">
-
+<div>
     <form action="/user/add">
         用户名：<input type="text" name="username" id="username" onblur="checkName()">
         <span id="span" style="color: red;" hidden>账号已存在，请重新输入</span><br><br>

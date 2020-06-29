@@ -85,4 +85,9 @@ public class UserDao extends BaseDao {
         template.update(sql, newPs, username);
     }
 
+    public void updatePic(Integer id, String pic) {
+        String sql = "update user set pic=? where id=? ";
+        template.update(sql, pic, id);
+    }
+
 }

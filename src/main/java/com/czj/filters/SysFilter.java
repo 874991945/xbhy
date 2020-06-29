@@ -30,14 +30,11 @@ public class SysFilter implements Filter {
 
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession();
         String uri = request.getRequestURI();
-        String name = request.getParameter("username");
-        String password = request.getParameter("password");
 
-        //规定登录地址为.../index.jsp
+        /*//规定登录地址为.../index.jsp
         if (uri.endsWith("/index.jsp")) {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
@@ -59,12 +56,11 @@ public class SysFilter implements Filter {
                 }
             }
         } else if (uri.endsWith("/") ||
-                uri.endsWith("/login") ||
                 uri.endsWith("/forget.jsp") ||
                 uri.endsWith("/email") ||
-                uri.endsWith("/forget") ||
                 uri.endsWith("/menu") ||
-        uri.endsWith("/addUserName.jsp")) {
+                uri.contains("login") ||
+                uri.contains("img")) {
             //直接放行
             filterChain.doFilter(request, response);
             return;
@@ -72,7 +68,8 @@ public class SysFilter implements Filter {
             if (session.getAttribute(SysConstant.SESSION_LOGIN) == null) {
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
-        }
+        }*/
+
         filterChain.doFilter(request, response);
 
     }

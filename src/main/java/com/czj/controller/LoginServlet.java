@@ -27,8 +27,10 @@ public class LoginServlet extends BaseServlet {
         String name = request.getParameter("username");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
+        String code = request.getParameter("code");
         HttpSession session = request.getSession();
         User user = userService.checkLogin(name, password);
+        Object obj = session.getAttribute(SysConstant.SESSION_IMGCODE);
 
         if ("1".equals(remember)) {
             Cookie cookie = new Cookie(SysConstant.COOKIE_REMEMBER, URLEncoder.encode(JSON.toJSONString(user), "utf-8"));
@@ -37,7 +39,8 @@ public class LoginServlet extends BaseServlet {
             response.addCookie(cookie);
         }
 
-        if (user == null) {
+
+        if (user == null || obj==null || !(obj.equals(code))) {
             //账号或密码错误
             response.sendRedirect("/index.jsp");
         } else {

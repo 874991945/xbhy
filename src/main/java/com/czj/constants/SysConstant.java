@@ -12,4 +12,8 @@ public class SysConstant {
 
     public static final String COOKIE_REMEMBER="cookie_remember";
 
+    public static final String SESSION_IMGCODE="session_imgCode";
+
+    public static final String FILE_PREFIX = "D:\\upload\\";
+
 }
