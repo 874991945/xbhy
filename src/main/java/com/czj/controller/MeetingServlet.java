@@ -28,8 +28,14 @@ public class MeetingServlet extends BaseServlet{
 
     public void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Meeting>list=meetingService.listAll();
-        request.setAttribute("list",list);
+        String title=request.getParameter("title");
+        title=title==null?"":title;
+
+        //获取页数
+        String pageStr = request.getParameter("page");
+
+        request.setAttribute("page", meetingService.listAll(title,pageStr));
+        request.setAttribute("title", title);
 
         request.getRequestDispatcher("/jsp/meeting/list.jsp").forward(request,response);
     }
@@ -40,6 +46,7 @@ public class MeetingServlet extends BaseServlet{
         Meeting meeting=new Meeting();
         try {
             BeanUtils.populate(meeting, map);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,5 +62,14 @@ public class MeetingServlet extends BaseServlet{
         }
         meetingService.delete(Integer.valueOf(id));
         response.sendRedirect("/meeting/list");
+    }
+
+    public void getMeetingById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String id=request.getParameter("id");
+        Meeting meeting=meetingService.getMeetingById(Integer.valueOf(id));
+        request.setAttribute("meeting",meeting);
+
+        request.getRequestDispatcher("/jsp/meeting/showMeeting.jsp").forward(request,response);
     }
 }

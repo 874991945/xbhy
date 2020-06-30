@@ -8,15 +8,21 @@
 <%@include file="../common/left.jsp" %>
 <div id="right">
 
-    <a href="/jsp/meeting/add.jsp" class="btn btn-mini">添加</a>
+    <a href="/jsp/meeting/add.jsp" class="btn btn-info">添加会议</a>
     <form action="/meeting/list" method="post">
-        <%--用户名：<input type="text" name="username" value="${username}">--%>
-        <%--<input type="submit" value="查询" class="btn btn-info">--%>
+        标题：<input type="text" name="title" value="${title}">
+        <%--状态：
+        <select name="status" id="status">
+            <option value="">请选择状态</option>
+            <option value="0" <c:if test="${meeting.status==0}">selected</c:if> >未开始</option>
+            <option value="1" <c:if test="${meeting.status==1}">selected</c:if> >进行中</option>
+            <option value="2" <c:if test="${meeting.status==2}">selected</c:if> >已结束</option>
+        </select>--%>
+        <input type="submit" value="查询" class="btn btn-info">
     </form>
 
     <table class="table table-bordered">
         <tr>
-            <td>序号</td>
             <td>会议题目</td>
             <td>会议内容</td>
             <td>发布时间</td>
@@ -27,10 +33,9 @@
             <td>操作</td>
         </tr>
 
-        <c:forEach var="meeting" items="${list}" varStatus="status">
+        <c:forEach var="meeting" items="${page.data}" varStatus="status">
             <tr>
-                <td>${status.index+1}</td>
-                <td>${meeting.title}</td>
+                <td><a href="/meeting/getMeetingById?id=${meeting.id}">${meeting.title}</a></td>
                 <td>${meeting.content}</td>
                 <td>${meeting.publishDate}</td>
                 <td>
@@ -51,11 +56,11 @@
         </c:forEach>
     </table>
 
-   <%-- 当前页：${page.pageCurrent}
-    <a href="/user/list?page=${page.pageCurrent-1>0?page.pageCurrent-1:1}&username=${username}">上一页</a>
-    <a href="/user/list?page=${page.pageCurrent+1>=page.pageCount?page.pageCount:page.pageCurrent+1}&username=${username}">下一页</a>
+    当前页：${page.pageCurrent}
+    <a href="/meeting/list?page=${page.pageCurrent-1>0?page.pageCurrent-1:1}&title=${title}">上一页</a>
+    <a href="/meeting/list?page=${page.pageCurrent+1>=page.pageCount?page.pageCount:page.pageCurrent+1}&title=${title}">下一页</a>
     共${page.pageCount}页<br>
-    总记录数：${page.count}--%>
+    总记录数：${page.count}
 </div>
 </body>
 </html>

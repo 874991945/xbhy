@@ -83,6 +83,8 @@ public class ImgServlet extends BaseServlet {
 
             //保存路径到数据库
             userService.updatePic(loginUser.getId(), suffix);
+
+            String idStr=request.getParameter("id");
             out.write("1");
         } catch (Exception e) {
             e.printStackTrace();

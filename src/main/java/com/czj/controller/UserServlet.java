@@ -45,7 +45,9 @@ public class UserServlet extends BaseServlet {
     public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Map<String, String[]> map = request.getParameterMap();
+
         User user = new User();
+
         try {
             BeanUtils.populate(user, map);
         } catch (IllegalAccessException e) {

@@ -80,4 +80,8 @@ public class UserService {
     public void updatePic(Integer id, String pic) {
         userDao.updatePic(id,pic);
     }
+
+    public User getUserByWxOpenId(String openid) {
+        return userDao.getUserByWxOpenId(openid);
+    }
 }

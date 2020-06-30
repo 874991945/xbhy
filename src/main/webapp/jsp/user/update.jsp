@@ -12,13 +12,14 @@
         // 点击图片的时候让picFile产生点击的效果
         $("#picFile").click();
     }
+
     $(function () {
         $("#picFile").change(function () {
             // 构造文件上传form
             var formData = new FormData();
             formData.append("iconFile", document.getElementById("picFile").files[0]);
             $.ajax({
-                url: "/img/upload?id=",
+                url: "/img/upload",
                 processData: false,      //默认为true,对请求传递的参数(formData)不做编码处理
                 contentType: false,       //不对请求头做处理
                 type: "post",
@@ -26,7 +27,8 @@
                 dataType: "",
                 success: function (data) {
                     if (data == 1) {
-                        $("#img-head").attr("src", "/img/getHead?id=" + $("#id").val() + "&nocache=" + new Date().getTime());
+                        alert(data);
+                        $("#img-head").attr("src", "/img/getHead?id=" + $("#id").val() +"&nocache=" + new Date().getTime());
                     } else {
                         alert("上传失败");
                     }
@@ -45,8 +47,7 @@
 
     <form action="/user/update" method="post">
         <%--隐藏域--%>
-        <input type="text" name="id" value="${user.id}" style="display: none;">
-
+        <input type="text" name="id" id="id" value="${user.id}" style="display: none;">
 
         <%--后台以io流的方式返回图片数据--%>
         <img id="img-head" src="/img/getHead?id=${user.id}" onclick="changeHead()"><br><br>

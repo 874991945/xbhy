@@ -14,17 +14,17 @@ import java.util.List;
  */
 public class UserDao extends BaseDao {
 
-    public List<User> listAll(String name, Page page) {
+    public List<User> listAll(String title, Page page) {
         String sql="select u.*,d.name deptName from user u left join dept d on u.dept_id=d.id where username like ? limit ?,?";
         return template.query(sql, new BeanPropertyRowMapper<User>(User.class),
-                "%"+name+"%",(page.getPageCurrent()-1)*page.getSize(),page.getSize());
+                "%"+title+"%",(page.getPageCurrent()-1)*page.getSize(),page.getSize());
     }
 
     //增加数据
     public void add(User user) {
-        String sql = "insert into user (username,password,email,real_name,age,sex,description,register_time,dept_id) values (?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into user (username,password,email,real_name,age,sex,description,register_time,dept_id,wx_openid) values (?,?,?,?,?,?,?,?,?,?)";
         template.update(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getRealName(),
-                user.getAge(), user.getSex(), user.getDescription(), user.getRegisterTime(), user.getDeptId());
+                user.getAge(), user.getSex(), user.getDescription(), user.getRegisterTime(), user.getDeptId(),user.getWxOpenid());
     }
 
     //总记录数
@@ -88,6 +88,15 @@ public class UserDao extends BaseDao {
     public void updatePic(Integer id, String pic) {
         String sql = "update user set pic=? where id=? ";
         template.update(sql, pic, id);
+    }
+
+    public User getUserByWxOpenId(String openid) {
+        String sql = "select * from user where wx_openid=?";
+        try {
+            return template.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), openid);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
 }
