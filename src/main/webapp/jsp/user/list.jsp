@@ -9,6 +9,7 @@
 <div id="right">
 
     <a href="/jsp/user/add.jsp" class="btn btn-mini">添加</a>
+    <a href="/poi/userExportExcel?username=${username}" class="btn btn-primary">导出Excel</a>
     <form action="/user/list" method="post">
         用户名：<input type="text" name="username" value="${username}">
         <input type="submit" value="查询" class="btn btn-info">

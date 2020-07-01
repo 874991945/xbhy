@@ -10,7 +10,7 @@
 <script>
     $(function () {
         $.ajax({
-            url:"/dept/list",
+            url:"/dept/deptList",
             type:"get",
             data:"",
             dataType:"json",

@@ -93,6 +93,8 @@ public class WeChatServlet extends BaseServlet {
             user.setUsername(UUID.randomUUID().toString().substring(36 - 15));
             //设置openid
             user.setWxOpenid(openid);
+            //设置成一个新的用户
+            userService.add(user);
         }
         session.setAttribute(SysConstant.SESSION_LOGIN, user);
         session.setMaxInactiveInterval(60);

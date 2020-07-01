@@ -23,11 +23,11 @@
 
     <table class="table table-bordered">
         <tr>
+            <td>部门名称</td>
             <td>会议题目</td>
             <td>会议内容</td>
             <td>发布时间</td>
             <td>开始时间</td>
-            <td>结束时间</td>
             <td>会议状态</td>
             <td>抄送人</td>
             <td>操作</td>
@@ -35,20 +35,21 @@
 
         <c:forEach var="meeting" items="${page.data}" varStatus="status">
             <tr>
+                <td>${meeting.deptName}</td>
                 <td><a href="/meeting/getMeetingById?id=${meeting.id}">${meeting.title}</a></td>
                 <td>${meeting.content}</td>
                 <td>${meeting.publishDate}</td>
-                <td>
-                    <fmt:formatDate var="startTime" value="${meeting.startTime}"
-                                    pattern="yyyy年MM月dd日 HH时mm分ss秒"></fmt:formatDate>
-                        ${startTime}
+                <td><fmt:parseDate var="startTime" value="${meeting.startTime}"
+                                   pattern="yyyy-MM-dd HH:mm:ss"></fmt:parseDate>
+                    <fmt:formatDate var="startTime2" value="${startTime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
+                    ${startTime2}
                 </td>
-                <td>
-                    <fmt:formatDate var="endTime" value="${meeting.endTime}"
-                                    pattern="yyyy年MM月dd日 HH时mm分ss秒"></fmt:formatDate>
-                        ${endTime}
+                <td><c:choose>
+                    <c:when test="${meeting.status==0}">未开始</c:when>
+                    <c:when test="${meeting.status==1}">进行中</c:when>
+                    <c:when test="${meeting.status==2}">已结束</c:when>
+                </c:choose>
                 </td>
-                <td>${meeting.status}</td>
                 <td>${meeting.makeUser}</td>
                 <td><a href="/meeting/toUpdate?id=${meeting.id}" class="btn btn-primary">修改</a>
                     <a href="/meeting/delete?id=${meeting.id}" class="btn btn-danger">删除</a></td>

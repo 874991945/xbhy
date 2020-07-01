@@ -27,7 +27,6 @@
                 dataType: "",
                 success: function (data) {
                     if (data == 1) {
-                        alert(data);
                         $("#img-head").attr("src", "/img/getHead?id=" + $("#id").val() +"&nocache=" + new Date().getTime());
                     } else {
                         alert("上传失败");

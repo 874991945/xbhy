@@ -2,20 +2,28 @@ package com.czj.entity;
 
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Meeting implements Serializable {
+
+  private String deptName;
 
   private Integer id;
   private Integer deptId;
   private String title;
   private String content;
-  private Date publishDate;
-  private Date startTime;
-  private Date endTime;
+  private String publishDate;
+  private String startTime;
+  private String endTime;
   private Integer status;
   private String makeUser;
 
+  public String getDeptName() {
+    return deptName;
+  }
+
+  public void setDeptName(String deptName) {
+    this.deptName = deptName;
+  }
 
   public Integer getId() {
     return id;
@@ -49,27 +57,27 @@ public class Meeting implements Serializable {
     this.content = content;
   }
 
-  public Date getPublishDate() {
+  public String getPublishDate() {
     return publishDate;
   }
 
-  public void setPublishDate(Date publishDate) {
+  public void setPublishDate(String publishDate) {
     this.publishDate = publishDate;
   }
 
-  public Date getStartTime() {
+  public String getStartTime() {
     return startTime;
   }
 
-  public void setStartTime(Date startTime) {
+  public void setStartTime(String startTime) {
     this.startTime = startTime;
   }
 
-  public Date getEndTime() {
+  public String getEndTime() {
     return endTime;
   }
 
-  public void setEndTime(Date endTime) {
+  public void setEndTime(String endTime) {
     this.endTime = endTime;
   }
 

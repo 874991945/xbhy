@@ -99,4 +99,19 @@ public class UserDao extends BaseDao {
         }
     }
 
+    public List<User>listForExcel(String name){
+
+        String sql = "SELECT " +
+                "d.name deptName, " +
+                "u.username username, " +
+                "u.real_name realName, " +
+                "u.age age, " +
+                "case when sex=1 then \"男\"" +
+                "when sex=0 then \"女\"" +
+                "else \"其他\" end sexName " +
+                "FROM user u left join dept d on u.dept_id=d.id where u.username like ?";
+        return template.query(sql, new BeanPropertyRowMapper<>(User.class),"%"+name+"%");
+
+    }
+
 }

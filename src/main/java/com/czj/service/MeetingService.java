@@ -3,7 +3,7 @@ package com.czj.service;
 import com.czj.dao.MeetingDao;
 import com.czj.entity.Meeting;
 import com.czj.entity.Page;
-import com.czj.entity.User;
+import com.czj.utils.DateUtil;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -32,9 +32,11 @@ public class MeetingService {
     }
 
     public void add(Meeting meeting) {
-        meeting.setPublishDate(new Date());
+        meeting.setPublishDate(DateUtil.getDateStr(new Date()));
+        meeting.setStartTime(meeting.getStartTime().replace("T"," "));
         meeting.setId(null);
         meeting.setDeptId(null);
+        meeting.setStatus(0);
         meetingDao.add(meeting);
     }
 
@@ -44,5 +46,28 @@ public class MeetingService {
 
     public Meeting getMeetingById(Integer id) {
         return meetingDao.getMeetingById(id);
+    }
+
+    public void updateStatusTask() {
+        List<Meeting> list = meetingDao.listAll();
+        for (Meeting meeting : list) {
+            //当前时间戳
+            long currentTime = new Date().getTime();
+            long startTime = DateUtil.getTimeByStr(meeting.getStartTime());
+            long endTime = DateUtil.getTimeByStr(meeting.getEndTime());
+
+            if (startTime <= currentTime) {
+                if (endTime > currentTime) {
+                    //会议正在进行中
+                    meetingDao.updateStatus(meeting.getId(),1);
+                } else {
+                    //会议已经结束
+                    meetingDao.updateStatus(meeting.getId(),2);
+                }
+            } else {
+                //会议未开始，不需要处理
+            }
+
+        }
     }
 }

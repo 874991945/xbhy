@@ -84,4 +84,6 @@ public class UserService {
     public User getUserByWxOpenId(String openid) {
         return userDao.getUserByWxOpenId(openid);
     }
+
+
 }

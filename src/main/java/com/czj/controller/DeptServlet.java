@@ -21,6 +21,14 @@ public class DeptServlet extends BaseServlet{
 
     private DeptService deptService=new DeptService();
 
+    public void deptList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        List<Dept>deptList=deptService.listAll();
+        request.setAttribute("deptList",deptList);
+        response.getWriter().write(JSON.toJSONString(deptList));
+    }
+
+
     public void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<Dept>deptList=deptService.listAll();

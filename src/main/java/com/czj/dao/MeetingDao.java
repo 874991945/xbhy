@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class MeetingDao extends BaseDao {
     public List<Meeting> listAll(String name, Page page) {
-        String sql = "select m.*,d.name from meeting m left join dept d on m.dept_id=d.id where m.title like ? limit ?,?";
+        String sql = "select m.*,d.name deptName from meeting m left join dept d on m.dept_id=d.id where m.title like ? limit ?,?";
         return template.query(sql, new BeanPropertyRowMapper<Meeting>(Meeting.class),
                 "%"+name+"%",(page.getPageCurrent()-1)*page.getSize(),page.getSize());
     }
@@ -47,5 +47,15 @@ public class MeetingDao extends BaseDao {
         } catch (DataAccessException e) {
             return null;
         }
+    }
+
+    public List<Meeting> listAll() {
+        String sql = "select * from meeting";
+        return template.query(sql, new BeanPropertyRowMapper<>(Meeting.class));
+    }
+
+    public void updateStatus(Integer meetingId, Integer status) {
+        String sql = "update meeting set status = ? where id = ?";
+        template.update(sql, status, meetingId);
     }
 }
